@@ -1,10 +1,8 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { useState } from "react";
-import Meter from "./Meter"; 
-import Input from "./Input";
 import axios from "axios";
-const qs = require("qs");
+import { useState } from "react";
+import "./App.css";
+import Input from "./Input";
+// const qs = require("qs");
 
 function App() {
   const [sentiment, setsentiment] = useState("");
