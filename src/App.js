@@ -1,36 +1,52 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react"; 
-import axios from 'axios';
-const qs = require('qs');
+import { useState } from "react";
+import Meter from "./Meter"; 
+import Input from "./Input";
+import axios from "axios";
+const qs = require("qs");
 
 function App() {
   const [sentiment, setsentiment] = useState("");
 
-  const analyse = async (text) => {
-    var data = qs.stringify({
-      text: text,
-    });
-    var config = {
-      method: "post",
-      url: "https://gg-sae.azurewebsites.net/analyse",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Cookie:
-          "ARRAffinity=9e89c1d60cfdd954c8867d82790648aafd773e27a2d4103f500276884301a0da; ARRAffinitySameSite=9e89c1d60cfdd954c8867d82790648aafd773e27a2d4103f500276884301a0da",
-      },
-      data: data,
-    };
-    console.log("config is ", config);
-    return axios(config)
-      .then(function (response) {
-        const resp = JSON.stringify(response.data);
-        console.log(resp);
-        return resp;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const analyse = async (text) => { 
+
+  // await  axios.post('https://gg-sae.azurewebsites.net/analyse',text, {headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   }}).then(resp => {
+  //     console.log("Response from the API is",resp);
+  //   }) 
+
+  axios.get('https://gg-sae.azurewebsites.net/').then((resp)=>{
+      console.log("Response is",resp);
+  }) 
+
+  axios.post('https://gg-sae.azurewebsites.net/analyse',text).then((resp)=>{
+    console.log("Analysed text is", resp); 
+    setsentiment(resp)
+  })
+
+    // var data = qs.stringify({
+    //   text: text,
+    // });
+    // var config = {
+    //   method: "post",
+    //   url: "https://gg-sae.azurewebsites.net/analyse",
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    //   text,
+    // };
+    // console.log("config is ", config);
+    // return axios(config)
+    //   .then(function (response) {
+    //     const resp = JSON.stringify(response.data);
+    //     console.log(resp);
+    //     return resp;
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   const onTextSubmitted = async () => {
@@ -43,9 +59,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <input type="text" id="sentence"></input>
+        <Input/>
         <button onClick={onTextSubmitted}>Submit text</button>
         <p>{sentiment}</p>
+        {/* <div>
+          <Meter />
+        </div> */}
       </header>
     </div>
   );
