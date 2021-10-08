@@ -40,9 +40,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header"> 
+        <h1 style={{color:'black', fontFamily:'monospace'}}>Sentiment Analyser POC</h1>
         <Input/>
-        <button onClick={onTextSubmitted}>Submit text</button>
+        <button style={{padding:'25px', border:'1px solid black', borderRadius:'10px', fontSize:'18px'}} onClick={onTextSubmitted}>Submit text</button>
         <p style={{color:'black'}}>{sentiment}</p>
         {/* <div>
           <Meter />
